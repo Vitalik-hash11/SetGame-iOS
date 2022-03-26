@@ -8,6 +8,8 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    let setGame = SetGame()
 
     @IBOutlet var cardList: [UIButton]!
     
