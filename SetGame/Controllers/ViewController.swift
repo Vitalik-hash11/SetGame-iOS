@@ -18,10 +18,24 @@ class ViewController: UIViewController {
     
     var content = [NSAttributedString]()
     
+    @IBOutlet weak var addThreeMoreButton: UIButton!
     @IBOutlet var cardList: [UIButton]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        updateUI()
+    }
+    
+    @IBAction func cardButtonPressed(_ sender: UIButton) {
+        //TODO: handle card selection
+    }
+    
+    @IBAction func addThreeMoreCardsPressed(_ sender: UIButton) {
+        setGame.addThreeMoreCards()
+        updateUI()
+    }
+    
+    private func updateUI() {
         for index in setGame.playedCards.indices {
             let card = setGame.playedCards[index]
             let uiCard = cardList[index]
@@ -31,7 +45,7 @@ class ViewController: UIViewController {
             }
             
             var attributes = [
-                .font: UIFont.systemFont(ofSize: 40),
+                .font: UIFont.systemFont(ofSize: 35),
             ] as [NSAttributedString.Key : Any]
             
             switch shadingArray[card.shadingIdentifier] {
@@ -45,13 +59,13 @@ class ViewController: UIViewController {
             default:
                 fatalError("Strange shading")
             }
+            uiCard.isHidden = false
+            uiCard.backgroundColor = UIColor.white
             uiCard.setAttributedTitle(NSAttributedString(string: string, attributes: attributes), for: .normal)
         }
+        if setGame.playedCards.count == 24 {
+            addThreeMoreButton.isEnabled = false
+        }
     }
-    
-    @IBAction func cardButtonPressed(_ sender: UIButton) {
-        //TODO: handle card selection
-    }
-    
     
 }

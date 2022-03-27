@@ -38,7 +38,9 @@ class SetGame {
     }
     
     func addThreeMoreCards() {
-        // TODO: Replaces cards from cardsDeck into playedCards
+        for _ in 1...3 {
+            playedCards.append(cardsDeck.removeLast())
+        }
     }
     
 }

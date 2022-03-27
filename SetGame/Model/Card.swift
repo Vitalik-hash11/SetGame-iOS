@@ -21,7 +21,7 @@ struct Card {
         if uniqueCardsArray.isEmpty {
             uniqueCardsArray = generateUniqueCardsArray()
         }
-        let uniqueIdentifiers = uniqueCardsArray.removeFirst()
+        let uniqueIdentifiers = uniqueCardsArray.removeLast()
         return uniqueIdentifiers
     }
     
