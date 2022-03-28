@@ -27,7 +27,11 @@ class ViewController: UIViewController {
     }
     
     @IBAction func cardButtonPressed(_ sender: UIButton) {
-        //TODO: handle card selection
+        guard let selectedCardIndex = cardList.firstIndex(of: sender) else {
+            fatalError()
+        }
+        setGame.selectCard(at: selectedCardIndex)
+        updateUI()
     }
     
     @IBAction func addThreeMoreCardsPressed(_ sender: UIButton) {
@@ -53,12 +57,20 @@ class ViewController: UIViewController {
                 attributes[.foregroundColor] = UIColor(named: colorArray[card.colorIdentifier])
             case "outline":
                 attributes[.foregroundColor] = UIColor(named: colorArray[card.colorIdentifier])
-                attributes[.strokeWidth] = 3
+                attributes[.strokeWidth] = 4
             case "striped":
                 attributes[.foregroundColor] = UIColor(named: colorArray[card.colorIdentifier])?.withAlphaComponent(0.15)
             default:
                 fatalError("Strange shading")
             }
+            
+            if card.isSelected {
+                uiCard.layer.borderWidth = 3
+                uiCard.layer.borderColor = UIColor.cyan.cgColor
+            } else {
+                uiCard.layer.borderWidth = 0
+            }
+            
             uiCard.isHidden = false
             uiCard.backgroundColor = UIColor.white
             uiCard.setAttributedTitle(NSAttributedString(string: string, attributes: attributes), for: .normal)

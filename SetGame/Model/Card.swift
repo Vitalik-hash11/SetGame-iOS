@@ -45,4 +45,29 @@ struct Card {
         }
         return uniqueCardsArray.shuffled()
     }
+    
+    subscript(property: String) -> Int {
+        switch property {
+        case "shapeIdentifier":
+            return shapeIdentifier
+        case "colorIdentifier":
+            return countIdentifier
+        case "shadingIdentifier":
+            return shapeIdentifier
+        case "countIdentifier":
+            return countIdentifier
+        default:
+            fatalError("Cannot find property \(property) in Card struct")
+        }
+    }
+}
+
+extension Card: Equatable {
+    static func == (lhs: Card, rhs: Card) -> Bool {
+        return
+            lhs.colorIdentifier == rhs.colorIdentifier &&
+            lhs.countIdentifier == rhs.countIdentifier &&
+            lhs.shadingIdentifier == rhs.shadingIdentifier &&
+            lhs.shapeIdentifier == rhs.shapeIdentifier
+    }
 }

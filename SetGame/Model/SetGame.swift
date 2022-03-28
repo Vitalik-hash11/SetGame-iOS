@@ -9,8 +9,8 @@ import Foundation
 
 class SetGame {
     
-    //MARK: - Initializers
-
+    // MARK: - Initializers
+    
     init() {
         for _ in 1...12 { // Only 12 cards will be shown at the start of the game
             self.playedCards += [Card()]
@@ -20,8 +20,8 @@ class SetGame {
         }
     }
     
-    //MARK: - Public API
-
+    // MARK: - Public API
+    
     var playedCards = [Card]()
     
     var cardsDeck = [Card]()
@@ -34,7 +34,13 @@ class SetGame {
     
     
     func selectCard(at index: Int) {
-        // TODO: Handle card selection
+        playedCards[index].isSelected = true
+        let selectedCard = playedCards[index]
+        if selectedCards.count == 3 {
+            checkMatch()
+        } else {
+            selectedCards.append(selectedCard)
+        }
     }
     
     func addThreeMoreCards() {
@@ -43,4 +49,45 @@ class SetGame {
         }
     }
     
+    private func checkMatch() {
+        if compareByAttribute("shapeIdentifier", first: selectedCards[0], second: selectedCards[1], third: selectedCards[2]),
+           compareByAttribute("colorIdentifier", first: selectedCards[0], second: selectedCards[1], third: selectedCards[2]),
+           compareByAttribute("shadingIdentifier", first: selectedCards[0], second: selectedCards[1], third: selectedCards[2]),
+           compareByAttribute("countIdentifier", first: selectedCards[0], second: selectedCards[1], third: selectedCards[2])
+        {
+            for index in selectedCards.indices {
+                guard let playedCardIndex = playedCards.firstIndex(of: selectedCards[index]) else {
+                    fatalError()
+                }
+                alreadyMatched.append(playedCards.remove(at: playedCardIndex))
+            }
+            if playedCards.count < 12 {
+                for _ in 1...3 {
+                    playedCards.append(cardsDeck.removeLast())
+                }
+            }
+
+            isCurrentlySelectedCardsMatch = true
+            selectedCards.removeAll()
+        } else {
+            for index in playedCards.indices {
+                playedCards[index].isSelected = false
+            }
+            isCurrentlySelectedCardsMatch = false
+            selectedCards.removeAll()
+        }
+    }
+    
+    private func compareByAttribute(_ attribute: String, first: Card, second: Card, third: Card) -> Bool {
+        if (first[attribute] == second[attribute] &&            // attribute should be equal in all cards
+            first[attribute] == third[attribute] &&             // or different
+            second[attribute] == third[attribute]) ||
+            (first[attribute] != second[attribute] &&
+             first[attribute] != third[attribute] &&
+             second[attribute] != third[attribute]) {
+            return true
+        } else {
+            return false
+        }
+    }
 }
