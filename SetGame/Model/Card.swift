@@ -26,10 +26,11 @@ struct Card {
     }
     
     init() {
-        self.shapeIdentifier = Card.getUniqueIdentifiers().shapeIdentifier
-        self.colorIdentifier = Card.getUniqueIdentifiers().colorIdentifier
-        self.shadingIdentifier = Card.getUniqueIdentifiers().shadingIdentifier
-        self.countIdentifier = Card.getUniqueIdentifiers().countIdentifier
+        let (shapeIdentifier, colorIdentifier, shadingIdentifier, countIdentifier) = Card.getUniqueIdentifiers()
+        self.shapeIdentifier = shapeIdentifier
+        self.colorIdentifier = colorIdentifier
+        self.shadingIdentifier = shadingIdentifier
+        self.countIdentifier = countIdentifier
     }
     
     static func generateUniqueCardsArray() -> [(shapeIdentifier: Int, colorIdentifier: Int, shadingIdentifier: Int, countIdentifier: Int)] {
