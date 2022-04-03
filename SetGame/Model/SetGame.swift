@@ -44,9 +44,11 @@ class SetGame {
                 selectedCards.append(playedCards[index])
             }
         } else {
-            guard let selectedCardIndex = selectedCards.firstIndex(of: playedCards[index]) else { fatalError() }
-            selectedCards.remove(at: selectedCardIndex)
-            playedCards[index].isSelected = false
+            if selectedCards.count < 3 {
+                guard let selectedCardIndex = selectedCards.firstIndex(of: playedCards[index]) else { fatalError() }
+                selectedCards.remove(at: selectedCardIndex)
+                playedCards[index].isSelected = false
+            }
         }
     }
     
