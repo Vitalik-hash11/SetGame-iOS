@@ -34,12 +34,19 @@ class SetGame {
     
     
     func selectCard(at index: Int) {
-        playedCards[index].isSelected = true
-        let selectedCard = playedCards[index]
-        if selectedCards.count == 3 {
-            checkMatch()
+        if !playedCards[index].isSelected {
+            if selectedCards.count == 3 {
+                checkMatch()
+                playedCards[index].isSelected = true
+                selectedCards.append(playedCards[index])
+            } else {
+                playedCards[index].isSelected = true
+                selectedCards.append(playedCards[index])
+            }
         } else {
-            selectedCards.append(selectedCard)
+            guard let selectedCardIndex = selectedCards.firstIndex(of: playedCards[index]) else { fatalError() }
+            selectedCards.remove(at: selectedCardIndex)
+            playedCards[index].isSelected = false
         }
     }
     

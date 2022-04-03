@@ -43,6 +43,7 @@ class ViewController: UIViewController {
         for index in setGame.playedCards.indices {
             let card = setGame.playedCards[index]
             let uiCard = cardList[index]
+            uiCard.layer.borderWidth = 0
             var string = ""
             for _ in 0...card.countIdentifier {
                 string.append(contentsOf: shapeArray[card.shapeIdentifier])
@@ -67,13 +68,18 @@ class ViewController: UIViewController {
             if card.isSelected {
                 uiCard.layer.borderWidth = 3
                 uiCard.layer.borderColor = UIColor.cyan.cgColor
-            } else {
-                uiCard.layer.borderWidth = 0
             }
             
             uiCard.isHidden = false
             uiCard.backgroundColor = UIColor.white
             uiCard.setAttributedTitle(NSAttributedString(string: string, attributes: attributes), for: .normal)
+            uiCard.titleLabel?.layer.opacity = 1.0
+        }
+        for index in setGame.playedCards.count..<cardList.count {
+            let uiCard = cardList[index]
+            uiCard.backgroundColor = .clear
+            uiCard.titleLabel?.layer.opacity = 0.0
+            uiCard.layer.borderWidth = 0
         }
         if setGame.playedCards.count == 24 {
             addThreeMoreButton.isEnabled = false
