@@ -36,9 +36,13 @@ class SetGame {
     func selectCard(at index: Int) {
         if !playedCards[index].isSelected {
             if selectedCards.count == 3 {
-                checkMatch()
+                clearSelected()
                 playedCards[index].isSelected = true
                 selectedCards.append(playedCards[index])
+            } else if selectedCards.count == 2 {
+                playedCards[index].isSelected = true
+                selectedCards.append(playedCards[index])
+                checkMatch()
             } else {
                 playedCards[index].isSelected = true
                 selectedCards.append(playedCards[index])
@@ -64,26 +68,9 @@ class SetGame {
            compareByAttribute("shadingIdentifier", first: selectedCards[0], second: selectedCards[1], third: selectedCards[2]),
            compareByAttribute("countIdentifier", first: selectedCards[0], second: selectedCards[1], third: selectedCards[2])
         {
-            for index in selectedCards.indices {
-                guard let playedCardIndex = playedCards.firstIndex(of: selectedCards[index]) else {
-                    fatalError()
-                }
-                alreadyMatched.append(playedCards.remove(at: playedCardIndex))
-            }
-            if playedCards.count < 12 {
-                for _ in 1...3 {
-                    playedCards.append(cardsDeck.removeLast())
-                }
-            }
-
             isCurrentlySelectedCardsMatch = true
-            selectedCards.removeAll()
         } else {
-            for index in playedCards.indices {
-                playedCards[index].isSelected = false
-            }
             isCurrentlySelectedCardsMatch = false
-            selectedCards.removeAll()
         }
     }
     
@@ -97,6 +84,29 @@ class SetGame {
             return true
         } else {
             return false
+        }
+    }
+    
+    private func clearSelected() {
+        if isCurrentlySelectedCardsMatch {
+            for index in selectedCards.indices {
+                guard let playedCardIndex = playedCards.firstIndex(of: selectedCards[index]) else {
+                    fatalError()
+                }
+                alreadyMatched.append(playedCards.remove(at: playedCardIndex))
+            }
+            if playedCards.count < 12 {
+                for _ in 1...3 {
+                    playedCards.append(cardsDeck.removeLast())
+                }
+            }
+            selectedCards.removeAll()
+            isCurrentlySelectedCardsMatch = false
+        } else {
+            for index in playedCards.indices {
+                playedCards[index].isSelected = false
+            }
+            selectedCards.removeAll()
         }
     }
 }

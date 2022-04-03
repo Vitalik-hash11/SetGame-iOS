@@ -68,6 +68,13 @@ class ViewController: UIViewController {
             if card.isSelected {
                 uiCard.layer.borderWidth = 3
                 uiCard.layer.borderColor = UIColor.cyan.cgColor
+                if setGame.selectedCards.count == 3 {
+                    if setGame.isCurrentlySelectedCardsMatch {
+                        uiCard.layer.borderColor = UIColor.green.cgColor
+                    } else {
+                        uiCard.layer.borderColor = UIColor.red.cgColor
+                    }
+                }
             }
             
             uiCard.isHidden = false
