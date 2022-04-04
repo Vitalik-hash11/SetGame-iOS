@@ -52,9 +52,9 @@ struct Card {
         case "shapeIdentifier":
             return shapeIdentifier
         case "colorIdentifier":
-            return countIdentifier
+            return colorIdentifier
         case "shadingIdentifier":
-            return shapeIdentifier
+            return shadingIdentifier
         case "countIdentifier":
             return countIdentifier
         default:
