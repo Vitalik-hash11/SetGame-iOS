@@ -39,7 +39,13 @@ class ViewController: UIViewController {
         updateUI()
     }
     
+    @IBAction func newGamePressed(_ sender: UIBarButtonItem) {
+        // TODO: clear deck
+    }
+    
+    
     private func updateUI() {
+        navigationItem.title = "Score: \(setGame.score)"
         for index in setGame.playedCards.indices {
             let card = setGame.playedCards[index]
             let uiCard = cardList[index]
@@ -88,7 +94,7 @@ class ViewController: UIViewController {
             uiCard.titleLabel?.layer.opacity = 0.0
             uiCard.layer.borderWidth = 0
         }
-        if setGame.playedCards.count == 24 {
+        if setGame.playedCards.count == 24 || setGame.cardsDeck.isEmpty {
             addThreeMoreButton.isEnabled = false
         }
     }

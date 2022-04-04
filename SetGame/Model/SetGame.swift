@@ -22,6 +22,8 @@ class SetGame {
     
     // MARK: - Public API
     
+    var score = 0
+    
     var playedCards = [Card]()
     
     var cardsDeck = [Card]()
@@ -52,15 +54,21 @@ class SetGame {
                 guard let selectedCardIndex = selectedCards.firstIndex(of: playedCards[index]) else { fatalError() }
                 selectedCards.remove(at: selectedCardIndex)
                 playedCards[index].isSelected = false
+                score -= 1
             }
         }
     }
     
     func addThreeMoreCards() {
+        if selectedCards.count == 3 {
+            clearSelected()
+        }
         for _ in 1...3 {
             playedCards.append(cardsDeck.removeLast())
         }
     }
+    
+    // MARK: - private methods
     
     private func checkMatch() {
         if compareByAttribute("shapeIdentifier", first: selectedCards[0], second: selectedCards[1], third: selectedCards[2]),
@@ -69,8 +77,10 @@ class SetGame {
            compareByAttribute("countIdentifier", first: selectedCards[0], second: selectedCards[1], third: selectedCards[2])
         {
             isCurrentlySelectedCardsMatch = true
+            score += 3
         } else {
             isCurrentlySelectedCardsMatch = false
+            score -= 5
         }
     }
     
