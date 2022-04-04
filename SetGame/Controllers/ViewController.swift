@@ -40,9 +40,9 @@ class ViewController: UIViewController {
     }
     
     @IBAction func newGamePressed(_ sender: UIBarButtonItem) {
-        // TODO: clear deck
+        setGame.reset()
+        updateUI()
     }
-    
     
     private func updateUI() {
         navigationItem.title = "Score: \(setGame.score)"

@@ -313,7 +313,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Score: 0" id="CmZ-KC-OgD">
-                        <barButtonItem key="rightBarButtonItem" title="New Game" style="plain" id="vcY-Cu-PiP">
+                        <barButtonItem key="rightBarButtonItem" title="New Game" id="vcY-Cu-PiP">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="newGamePressed:" destination="BYZ-38-t0r" id="aVN-LI-u4B"/>

@@ -12,12 +12,7 @@ class SetGame {
     // MARK: - Initializers
     
     init() {
-        for _ in 1...12 { // Only 12 cards will be shown at the start of the game
-            self.playedCards += [Card()]
-        }
-        for _ in 1...69 { // The full deck is 81 cards after first hand become 69 (81 - 12)
-            self.cardsDeck += [Card()]
-        }
+        generateCards()
     }
     
     // MARK: - Public API
@@ -33,7 +28,6 @@ class SetGame {
     var alreadyMatched = [Card]()
     
     var isCurrentlySelectedCardsMatch = false
-    
     
     func selectCard(at index: Int) {
         if !playedCards[index].isSelected {
@@ -60,12 +54,23 @@ class SetGame {
     }
     
     func addThreeMoreCards() {
-        if selectedCards.count == 3 {
+        if selectedCards.count == 3 && isCurrentlySelectedCardsMatch {
             clearSelected()
+        } else {
+            for _ in 1...3 {
+                playedCards.append(cardsDeck.removeLast())
+            }
         }
-        for _ in 1...3 {
-            playedCards.append(cardsDeck.removeLast())
-        }
+    }
+    
+    func reset() {
+        playedCards.removeAll()
+        cardsDeck.removeAll()
+        selectedCards.removeAll()
+        alreadyMatched.removeAll()
+        isCurrentlySelectedCardsMatch = false
+        score = 0
+        generateCards()
     }
     
     // MARK: - private methods
@@ -117,6 +122,15 @@ class SetGame {
                 playedCards[index].isSelected = false
             }
             selectedCards.removeAll()
+        }
+    }
+    
+    private func generateCards() {
+        for _ in 1...12 { // Only 12 cards will be shown at the start of the game
+            self.playedCards += [Card()]
+        }
+        for _ in 1...69 { // The full deck is 81 cards after first hand become 69 (81 - 12)
+            self.cardsDeck += [Card()]
         }
     }
 }
